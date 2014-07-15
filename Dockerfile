@@ -1,10 +1,14 @@
 # Android development environment based on Ubuntu 14.04 LTS.
 # version 0.0.1
 
+# - https://services.gradle.org/distributions/gradle-2.0-bin.zip
+# - http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
+# - https://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2
+
 # Start with Ubuntu 14.04 LTS.
 FROM phusion/baseimage
 
-MAINTAINER Brian Prodoehl <bprodoehl@connectify.me>
+MAINTAINER Zaicheng Qi <vmlinz@gmail.com>
 
 # Never ask for confirmations
 ENV DEBIAN_FRONTEND noninteractive
@@ -12,6 +16,7 @@ RUN echo "debconf shared/accepted-oracle-license-v1-1 select true" | debconf-set
 RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | debconf-set-selections
 
 # First, install add-apt-repository and bzip2
+RUN dpkg --add-architecture i386
 RUN apt-get update
 RUN apt-get -y install software-properties-common python-software-properties bzip2 unzip openssh-client git lib32stdc++6 lib32z1
 
@@ -25,13 +30,13 @@ RUN apt-get update
 RUN apt-get -y install oracle-java7-installer
 
 # Install android sdk
-RUN wget http://dl.google.com/android/android-sdk_r23-linux.tgz
-RUN tar -xvzf android-sdk_r23-linux.tgz
+RUN wget http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
+RUN tar -xvzf android-sdk_r23.0.2-linux.tgz
 RUN mv android-sdk-linux /usr/local/android-sdk
-RUN rm android-sdk_r23-linux.tgz
+RUN rm android-sdk_r23.0.2-linux.tgz
 
 # Install Android tools
-RUN echo y | /usr/local/android-sdk/tools/android update sdk --filter platform,tool,platform-tool,extra,addon-google_apis-google-19,addon-google_apis_x86-google-19,build-tools-19.1.0 --no-ui -a
+RUN echo y | /usr/local/android-sdk/tools/android update sdk --filter tools,platform-tools,build-tools-19.1.0,android-19,extra-google-google_play_services,extra-android-support,extra-android-m2repository,extra-google-analytics_sdk_v2 --no-ui --force -a
 
 # Install Android NDK
 RUN wget https://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2
@@ -40,10 +45,10 @@ RUN mv android-ndk-r9d /usr/local/android-ndk
 RUN rm android-ndk-r9d-linux-x86_64.tar.bz2
 
 # Install Gradle
-RUN wget https://downloads.gradle.org/distributions/gradle-1.10-bin.zip
-RUN unzip gradle-1.10-bin.zip
-RUN mv gradle-1.10 /usr/local/gradle
-RUN rm gradle-1.10-bin.zip
+RUN wget https://services.gradle.org/distributions/gradle-2.0-bin.zip
+RUN unzip gradle-2.0-bin.zip
+RUN mv gradle-2.0 /usr/local/gradle
+RUN rm gradle-2.0-bin.zip
 
 # Environment variables
 ENV ANDROID_HOME /usr/local/android-sdk
