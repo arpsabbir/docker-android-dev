@@ -36,7 +36,8 @@ RUN mv android-sdk-linux /usr/local/android-sdk
 RUN rm android-sdk_r23.0.2-linux.tgz
 
 # Install Android tools
-ADD android-sdk-installer/accept-licenses /tmp/
+RUN curl -3L -o /tmp/accept-licenses https://github.com/embarkmobile/android-sdk-installer/raw/version-2/accept-licenses
+RUN chmod +x /tmp/accept-licenses
 RUN /tmp/accept-licenses "/usr/local/android-sdk/tools/android update sdk --filter tools,platform-tools,build-tools-19.1.0,android-19,extra-google-google_play_services,extra-android-support,extra-android-m2repository,extra-google-analytics_sdk_v2 --no-ui --force -a" "android-sdk-license-5be876d5|android-sdk-preview-license-52d11cd2"
 
 # Install Android NDK
@@ -66,3 +67,4 @@ ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 
 # Clean up
 RUN apt-get clean
+RUN rm /tmp/accept-licenses
