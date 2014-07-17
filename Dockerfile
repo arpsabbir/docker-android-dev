@@ -18,7 +18,7 @@ RUN echo "debconf shared/accepted-oracle-license-v1-1 seen true" | debconf-set-s
 # First, install add-apt-repository and bzip2
 RUN dpkg --add-architecture i386
 RUN apt-get update
-RUN apt-get -y install software-properties-common python-software-properties bzip2 unzip openssh-client git lib32stdc++6 lib32z1
+RUN apt-get -y install software-properties-common python-software-properties bzip2 unzip openssh-client git lib32stdc++6 lib32z1 expect
 
 # Add oracle-jdk7 to repositories
 RUN add-apt-repository ppa:webupd8team/java
