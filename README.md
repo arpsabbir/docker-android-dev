@@ -6,19 +6,19 @@
 
 #### Install
 
-You can either pull from `vmlinz/android-dev`:
+You can either pull from `vmlinz/docker-android-dev`:
 
 ```
-docker pull vmlinz/android-dev
+docker pull vmlinz/docker-android-dev
 ```
 
 ```
-docker run -i -t vmlinz/android-dev /bin/bash
+docker run -i -t vmlinz/docker-android-dev /bin/bash
 ```
 
 or add it to your Dockerfile:
 
 ```
-FROM vmlinz/android-dev
+FROM vmlinz/docker-android-dev
 ```
 
