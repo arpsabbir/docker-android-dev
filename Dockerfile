@@ -36,7 +36,7 @@ RUN mv android-sdk-linux /usr/local/android-sdk
 RUN rm android-sdk_r23.0.2-linux.tgz
 
 # Install Android tools
-ADD accept-licenses /tmp/accept-licenses
+ADD accept-licenses /tmp/
 RUN expect /tmp/accept-licenses "/usr/local/android-sdk/tools/android update sdk --filter tools,platform-tools,build-tools-19.1.0,android-19,extra-google-google_play_services,extra-android-support,extra-android-m2repository,extra-google-m2repository --no-ui --force -a" "android-sdk-license-5be876d5|android-sdk-preview-license-52d11cd2"
 
 # Install Android NDK
