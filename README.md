@@ -2,6 +2,7 @@
 
 * Oracle Java JDK 7
 * Android SDK r23.0.2
+* Android NDK r9d
 * Gradle 2.0
 
 #### Install
