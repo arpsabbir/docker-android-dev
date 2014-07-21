@@ -29,33 +29,23 @@ RUN apt-get update
 # Install oracle-jdk7
 RUN apt-get -y install oracle-java7-installer
 
-# Install android sdk
-RUN wget http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
-RUN tar -xvzf android-sdk_r23.0.2-linux.tgz
-RUN mv android-sdk-linux /usr/local/android-sdk
-RUN rm android-sdk_r23.0.2-linux.tgz
-
-# Install Android tools
-ADD accept-licenses /tmp/
-RUN expect /tmp/accept-licenses "/usr/local/android-sdk/tools/android update sdk --filter tools,platform-tools,build-tools-19.1.0,android-19,extra-google-google_play_services,extra-android-support,extra-android-m2repository,extra-google-m2repository --no-ui --force -a" "android-sdk-license-5be876d5|android-sdk-preview-license-52d11cd2"
+RUN curl -3L https://github.com/vmlinz/android-sdk-installer/raw/master/android-sdk-installer | bash /dev/stdin --install="tools,platform-tools,build-tools-20.0.0,build-tools-19.1.0,android-19,sys-img-armeabi-v7a-android-19,extra-android-support,extra-android-m2repository,extra-google-m2repository" --dir="/opt" --accept="android-sdk-license-5be876d5|android-sdk-preview-license-52d11cd2"
 
 # Install Android NDK
 RUN wget https://dl.google.com/android/ndk/android-ndk-r9d-linux-x86_64.tar.bz2
-RUN tar -xvjf android-ndk-r9d-linux-x86_64.tar.bz2
-RUN mv android-ndk-r9d /usr/local/android-ndk
+RUN tar -xvjf android-ndk-r9d-linux-x86_64.tar.bz2 -C /opt
 RUN rm android-ndk-r9d-linux-x86_64.tar.bz2
 
 # Install Gradle
 RUN wget https://services.gradle.org/distributions/gradle-2.0-bin.zip
 RUN unzip gradle-2.0-bin.zip
-RUN mv gradle-2.0 /usr/local/gradle
+RUN mv gradle-2.0 /opt/
 RUN rm gradle-2.0-bin.zip
 
 # Environment variables
-ENV ANDROID_HOME /usr/local/android-sdk
-ENV ANDROID_SDK_HOME $ANDROID_HOME
-ENV ANDROID_NDK_HOME /usr/local/android-ndk
-ENV GRADLE_HOME /usr/local/gradle
+ENV ANDROID_SDK_HOME /opt/android-sdk-linux
+ENV ANDROID_NDK_HOME /opt/android-ndk-r9d
+ENV GRADLE_HOME /opt/gradle-2.0
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
 ENV PATH $PATH:$ANDROID_NDK_HOME
@@ -66,4 +56,3 @@ ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 
 # Clean up
 RUN apt-get clean
-RUN rm /tmp/accept-licenses
