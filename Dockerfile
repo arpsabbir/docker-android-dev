@@ -45,6 +45,7 @@ RUN rm gradle-2.0-bin.zip
 # Environment variables
 ENV ANDROID_SDK_HOME /opt/android-sdk-linux
 ENV ANDROID_NDK_HOME /opt/android-ndk-r9d
+ENV ANDROID_HOME $ANDROID_SDK_HOME
 ENV GRADLE_HOME /opt/gradle-2.0
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
